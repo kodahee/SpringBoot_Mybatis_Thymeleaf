@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  	<typeAliases>
+  		<typeAlias type="com.lalalala.s1.board.BoardVO" alias="BoardVO"/>
+  		<typeAlias type="com.lalalala.s1.board.BoardFileVO" alias="BoardFileVO"/>
+  		<typeAlias type="com.lalalala.s1.board.notice.NoticeVO" alias="NoticeVO"/>
+  		
+  		<typeAlias type="com.lalalala.s1.util.Pager" alias="Pager"/>
+  	</typeAliases>
+  
+  </configuration>

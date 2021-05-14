@@ -10,9 +10,99 @@
 	<!-- Jumbo -->
 	<div th:replace="/fragments/default :: jumbo"></div>
 	
-	<h1 th:text="${board}"></h1>
+	<div class="container">
+		<h2 th:text="${board}"></h2>
+		
+		<!-- 검색 form -->
+		<div class=" d-flex justify-content-start">
+			<div class="input-group align-items-center">
+				<form id="frm" th:action="@{list}" class="form-inline">
+					<input type="hidden" name="curPage" value="1" id="curPage">
+					<div class="input-group-prepend">
+						<select class="form-control" name="kind" id="kind"
+							th:value="${pager.kind}">
+							<option class="sel"
+								th:selected="${pager.kind}== 'Title'?true:false">Title</option>
+							<option class="sel"
+								th:selected="${pager.kind}=='Contents'?true:false">Contents</option>
+							<option class="sel"
+								th:selected="${pager.kind}=='Writer'?true:false">Writer</option>
+						</select>
+					</div>
+					<input type="text" class="form-control" name="search" id="search"
+						th:value="${pager.search}" placeholder="">
+					<div class="input-group-append">
+						<button class="btn btn-success" type="submit">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- 검색 form -->
+		
+		
+		<table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Num</th>
+		      <th scope="col">Title</th>
+		      <th scope="col">Writer</th>
+		      <th scope="col">Date</th>
+		      <th scope="col">Hit</th>
+		      <th scope="col">Index</th>
+		      <th scope="col">Count</th>
+		      <th scope="col">Size</th>
+		      <th scope="col">even</th>
+		      <th scope="col">odd</th>
+		      <th scope="col">first</th>
+		      <th scope="col">last</th>
+		      <!-- <th scope="col">Current</th> -->
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="vo, state : ${list}">
+		      <th scope="row" th:text="${vo.num}"></th>
+		      				          <!--@{ |${board}select| } -->
+		      				          <!-- paramter 전송 @{URL주소(파라미터명=값, 파라미터명2=값2,...)}  -->
+		      <td><a href="#" th:href="@{select(num=${vo.num})}" th:text="${vo.title}">Mark</a></td>
+		      <td th:text="${vo.writer}">Otto</td>
+		      <td th:text="${vo.regDate}">@mdo</td>
+		      <td th:text="${vo.hit}"></td>
+		      <td th:text="${state.index}"></td> <!-- 인덱스 번호 0 부터 시작 -->
+		      <td th:text="${state.count}"></td> <!-- 횟수 번호 1 부터 시작 -->
+		      <td th:text="${state.size}"></td> <!-- 총 갯수  -->
+		      <td th:text="${state.even}"></td> <!-- 현재 반복의 짝수 여부   -->
+		      <td th:text="${state.odd}"></td> <!-- 현재 반복의 홀수 여부   -->
+		      <!-- <td th:text="${state.current}"></td> 현재 요소  -->
+		      <td th:text="${state.first}"></td> <!-- 현재 반복이 첫번째 여부   -->
+		      <td th:text="${state.last}"></td> <!-- 현재 반복이 마지막 여부   -->
+		    </tr>
+		   </tbody>
+		 </table> 
+		 
+		 <a href="#" class="btn btn-primary" th:href="@{./fileDown}">FileDown</a>
+		 <a href="#" class="btn btn-primary" th:href="@{./insert}">WRITE</a>
+	</div>
+	
+	<div class="container d-flex justify-content-center">
+		  <ul class="pagination">
+		  
+		  	<li th:classappend="${pager.pre? 'disable':'active'}"  class="page-item">
+		  		<a th:if="${pager.pre}" class="page-link pager" href="#" th:title="${pager.startNum-1}">Previous</a>
+		  		<!-- if else ==> if unless 
+		  			 unless 사용시에도 조건식은 사용
+		  			 if문에 사용한 조건식과동일한 조건식 사용
+		  		-->
+		  		<span th:unless="${pager.pre}" class="page-link">Previous</span>
+		  	</li>
+		    <li class="page-item" th:each="i : ${#numbers.sequence(pager.startNum, pager.lastNum)}"><a class="page-link pager" href="#" th:text="${i}" th:title="${i}">Previous</a></li>
+		    <li th:if="${pager.next}" class="page-item"><a class="page-link" href="#" th:title="${pager.lastNum+1}" th>Next</a></li>
+		  </ul>
+	</div>
+	
 	<!-- footer -->
 	<div th:replace="/fragments/default :: footer"></div>
+
+<script type="text/javascript" th:src="@{/js/boardSearch.js}"></script>
 
 </body>
 </html>
