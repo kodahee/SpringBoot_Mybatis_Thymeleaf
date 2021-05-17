@@ -2,6 +2,8 @@ package com.lalalala.s1.board.notice;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lalalala.s1.board.BoardFileVO;
 import com.lalalala.s1.board.BoardVO;
+import com.lalalala.s1.member.MemberVO;
 import com.lalalala.s1.util.Pager;
 
 @Controller
@@ -68,10 +71,25 @@ public class NoticeController {
 	}
 	
 	@GetMapping("insert")
-	public String setInsert(Model model)throws Exception{
+	public String setInsert(Model model, HttpSession session)throws Exception{
 		model.addAttribute("vo", new BoardVO());
 		model.addAttribute("action", "insert");
-		return "board/form";
+		
+		 Object obj = session.getAttribute("member");
+		 MemberVO memberVO = null;
+		 String path = "redirect:/member/login";
+		 
+//		 if(obj != null) {
+//			 
+//		 }
+		 if(obj instanceof MemberVO) {
+			 memberVO = (MemberVO)obj;
+			 if(memberVO.getUsername().equals("admin")) {
+				 path = "board/form";
+			 }
+		 }
+		 
+		return path;
 	}
 	
 	@PostMapping("insert")

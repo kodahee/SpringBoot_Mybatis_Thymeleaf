@@ -74,16 +74,17 @@
    			update set qna ref=#{num} where num=#{num}
    		</update>
    		
-   		<insert id="setReplyInsert" parameterType="BoardVO">
+   		<insert id="setReplyInsert" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="num">
    			insert into qna (title, writer, contents, ref, step, depth)
-   			values (#{title}, #{writer}, #{contents}, #{num}, 
-   				(select step+1 from qna where num=#{num}),
-   				(select depth+1 from qna where num=#{num})
+   			values (#{title}, #{writer}, #{contents},
+   				(select ref from qna Q where num=#{num}), 
+   				(select step+1 from qna Q where num=#{num}),
+   				(select depth+1 from qna Q where num=#{num})
    			)
    		</insert>
    		
-   		<update id="setReplyInsert" parameterType="BoardVO">
-   			update set qna set step=setp+1
+   		<update id="setReplyUpdate" parameterType="BoardVO">
+   			update set qna set step=step+1
    			where ref=(select ref from qna where num=#{num}) 
    			and step > (select step from qna where num=#{num})
    		</update>

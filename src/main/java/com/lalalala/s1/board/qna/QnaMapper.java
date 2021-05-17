@@ -1,8 +1,11 @@
 package com.lalalala.s1.board.qna;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.lalalala.s1.board.BoardMapper;
 import com.lalalala.s1.board.BoardVO;
 
+@Mapper
 public interface QnaMapper extends BoardMapper {
 	
 	public int setReplyInsert(BoardVO boardVO) throws Exception;
