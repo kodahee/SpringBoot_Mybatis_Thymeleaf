@@ -35,11 +35,14 @@ public class MemberController {
 
 	@PostMapping("login")
 	public String getLogin(MemberVO memberVO, HttpSession session) throws Exception {
+		memberVO = memberService.getLogin(memberVO);
+		//session.setAttribute("member", memberVO);
+		
 		if(memberVO != null) {
 			session.setAttribute("member", memberVO);
 		}
 		
-		return "redirect:../";
+		return "redirect:/";
 	}
 	
 	@GetMapping("logout")

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script type="text/javascript" th:inlint="javascript">
+	//let msg = '${msg}';		// thymeleaf일때는 안됨
+	let msg = [[${msg}]];
+	alert(msg);
+	location.href=[[${path}]];
+</script>
+
+</body>
+</html>

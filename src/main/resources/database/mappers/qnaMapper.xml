@@ -66,8 +66,8 @@
    		</update>
    		
    		<insert id="setInsert" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="num">
-   			insert into qna (title, writer, contents) 
-   			values(#{title}, #{writer}, #{contents})
+   			insert into qna (title, writer, contents, ref) 
+   			values(#{title}, #{writer}, #{contents}, 0)
    		</insert>
    		
    		<update id="setRefUpdate" parameterType="BoardVO">

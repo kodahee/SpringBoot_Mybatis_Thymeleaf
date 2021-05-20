@@ -32,6 +32,10 @@ public class QnaController {
 		List<BoardVO> ar = qnaService.getList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
+		for(BoardVO boardVO :ar) {
+			QnaVO qnaVO = (QnaVO)boardVO;
+			System.out.println(qnaVO.getDepth());
+		}
 		return "board/list";
 	}
 	

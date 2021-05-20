@@ -57,7 +57,7 @@ public class QnaService implements BoardService {
 			qnaMapper.setFileInsert(boardFileVO);
 		}
 		
-		return 0;
+		return result;
 	}
 
 	@Override

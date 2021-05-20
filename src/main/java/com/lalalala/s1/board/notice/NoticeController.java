@@ -75,21 +75,24 @@ public class NoticeController {
 		model.addAttribute("vo", new BoardVO());
 		model.addAttribute("action", "insert");
 		
-		 Object obj = session.getAttribute("member");
-		 MemberVO memberVO = null;
-		 String path = "redirect:/member/login";
-		 
+//		 Object obj = session.getAttribute("member");
+//		 MemberVO memberVO = null;
+//		 String path = "common/result";
+//		 String path = "redirect:/member/login";
+//		 model.addAttribute("msg", "관리자가 아닙니다.");
+//		 model.addAttribute("path", "./list");
+//		 
 //		 if(obj != null) {
 //			 
 //		 }
-		 if(obj instanceof MemberVO) {
-			 memberVO = (MemberVO)obj;
-			 if(memberVO.getUsername().equals("admin")) {
-				 path = "board/form";
-			 }
-		 }
-		 
-		return path;
+//		 if(obj instanceof MemberVO) {
+//			 memberVO = (MemberVO)obj;
+//			 if(memberVO.getUsername().equals("admin")) {
+//				 path = "board/form";
+//			 }
+//		 }
+		
+		return "board/form";
 	}
 	
 	@PostMapping("insert")
