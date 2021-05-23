@@ -29,7 +29,7 @@ class NoticeMapperTest {
 		System.out.println("Finish");
 	}
 	
-	@Test
+	//@Test
 	void getListTest() throws Exception {
 		List<BoardVO> ar = noticeMapper.getList(null);
 		
