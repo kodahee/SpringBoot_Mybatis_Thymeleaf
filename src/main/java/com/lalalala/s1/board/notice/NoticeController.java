@@ -2,7 +2,10 @@ package com.lalalala.s1.board.notice;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lalalala.s1.board.BoardFileVO;
 import com.lalalala.s1.board.BoardVO;
+import com.lalalala.s1.member.MemberVO;
 import com.lalalala.s1.util.Pager;
 
 @Controller
@@ -26,6 +30,9 @@ public class NoticeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Value("${board.notice.filePath}")
+	private String filePath;
+	
 	@ModelAttribute("board")
 	public String getBoard() {
 		return "notice";
@@ -37,7 +44,7 @@ public class NoticeController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("fileName", fileName);
 		mv.addObject("oriName", oriName);
-		mv.addObject("filePath", "/upload/notice/");
+		mv.addObject("filePath", filePath);
 		
 		// view의 이름은 Bean의 이름과 일치
 		mv.setViewName("down");
@@ -48,6 +55,8 @@ public class NoticeController {
 	// /notice/list
 	@GetMapping("list")
 	public String getList(Model model, Pager pager)throws Exception{
+		System.out.println("FilePath : "+filePath);
+		
 		List<BoardVO> ar = noticeService.getList(pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("pager", pager);
@@ -68,18 +77,33 @@ public class NoticeController {
 	}
 	
 	@GetMapping("insert")
-	public String setInsert(Model model)throws Exception{
+	public String setInsert(Model model, HttpSession session)throws Exception{
 		model.addAttribute("vo", new BoardVO());
 		model.addAttribute("action", "insert");
-		return "board/form";
+		
+		Object obj = session.getAttribute("member");
+		MemberVO memberVO = null;
+		String path="redirect:/member/login";
+		//if(obj != null) {}
+		if(obj instanceof MemberVO) {
+			memberVO = (MemberVO)obj;
+			
+			if(memberVO.getUsername().equals("admin")) {
+				path="board/form";
+			}
+		}	
+		
+		
+		
+		return path;
 	}
 	
 	@PostMapping("insert")
 	public String setInsert(BoardVO boardVO, MultipartFile [] files)throws Exception{
-//			System.out.println(files.length);
-//			for(MultipartFile f : files) {
-//				System.out.println(f.getOriginalFilename());
-//			}
+//		System.out.println(files.length);
+//		for(MultipartFile f : files) {
+//			System.out.println(f.getOriginalFilename());
+//		}
 		
 		int result = noticeService.setInsert(boardVO, files);
 		

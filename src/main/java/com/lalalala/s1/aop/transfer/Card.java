@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class Card {
 	
-	@Around("execution(* com.iu.s1.aop.transfer.Transfer.*())")
+	@Around("execution(* com.lalalala.s1.aop.transfer.Transfer.*())")
 	public Object cardCheck(ProceedingJoinPoint joinPoint) throws Throwable {
 		System.out.println("----- 탑승 전 카드 체크 ----- ");
 		//joinPoint - 핵심메서드(버스, 지하철)를 객체화 
@@ -21,7 +21,7 @@ public class Card {
 		return obj;
 	}
 	
-	@AfterReturning("execution(* com.iu.s1.board.notice.NoticeService.get*(..))")
+	@AfterReturning("execution(* com.lalalala.s1.board.notice.NoticeService.get*(..))")
 	public void selectCheck() {
 		System.out.println("Select Query 정상 종료");
 	}

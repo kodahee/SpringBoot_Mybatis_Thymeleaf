@@ -3,6 +3,7 @@ package com.lalalala.s1.board.notice;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,13 +15,16 @@ import com.lalalala.s1.util.FileManager;
 import com.lalalala.s1.util.Pager;
 
 @Service
-//@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class NoticeService implements BoardService {
 
 	@Autowired
 	private NoticeMapper noticeMapper;
 	@Autowired
 	private FileManager fileManager;
+	
+	@Value("${board.notice.filePath}")
+	private String filePath;
 	
 	@Override
 	public List<BoardVO> getList(Pager pager) throws Exception {
@@ -50,7 +54,7 @@ public class NoticeService implements BoardService {
 			throw new Exception();
 		}
 		
-		String filePath= "upload/notice/";
+		String filePath= this.filePath;
 		
 		for(MultipartFile multipartFile:files) {
 			if(multipartFile.getSize()==0) {
